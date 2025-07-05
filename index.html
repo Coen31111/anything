@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MedievalMC</title>
+    <link rel="icon" type="image/png" href="attached_assets/image_1751652236407.png">
+    <link href="style.css" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Authentication Modal -->
+    <div class="auth-modal" id="authModal">
+        <div class="auth-content">
+            <div class="auth-header">
+                <h2 id="authTitle">Login to MedievalMC</h2>
+                <button class="close-btn" id="closeAuth">&times;</button>
+            </div>
+            <div class="auth-body">
+                <form id="authForm">
+                    <div class="form-group">
+                        <input type="text" id="authUsername" placeholder="Username" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" id="authPassword" placeholder="Password" required>
+                    </div>
+                    <div class="form-group" id="confirmPasswordGroup" style="display: none;">
+                        <input type="password" id="confirmPassword" placeholder="Confirm Password">
+                    </div>
+                    <div class="form-group" id="emailGroup" style="display: none;">
+                        <input type="email" id="authEmail" placeholder="Email">
+                    </div>
+                    <button type="submit" class="btn btn-primary" id="authSubmit">Login</button>
+                </form>
+                <div class="auth-switch">
+                    <p id="authSwitchText">Don't have an account? <a href="#" id="authSwitchLink">Sign up</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- User Settings Modal -->
+    <div class="settings-modal" id="settingsModal">
+        <div class="settings-content">
+            <div class="settings-header">
+                <h2>User Settings</h2>
+                <button class="close-btn" id="closeSettings">&times;</button>
+            </div>
+            <div class="settings-body">
+                <div class="settings-section">
+                    <h3>Profile Information</h3>
+                    <form id="profileForm">
+                        <div class="form-group">
+                            <label>Username</label>
+                            <input type="text" id="profileUsername" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="email" id="profileEmail">
+                        </div>
+                        <div class="form-group">
+                            <label>Rank</label>
+                            <input type="text" id="profileRank" readonly>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Update Profile</button>
+                    </form>
+                </div>
+                <div class="settings-section">
+                    <h3>Change Password</h3>
+                    <form id="passwordForm">
+                        <div class="form-group">
+                            <input type="password" id="currentPassword" placeholder="Current Password" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" id="newPassword" placeholder="New Password" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" id="confirmNewPassword" placeholder="Confirm New Password" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Change Password</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <img src="attached_assets/image_1751652236407.png" alt="MedievalMC">
+                <span>MedievalMC</span>
+            </div>
+            <div class="nav-search">
+                <input type="text" placeholder="Search..." id="searchInput">
+                <i class="fas fa-search"></i>
+            </div>
+            <div class="nav-menu">
+                <a href="#home" class="nav-link active">Home</a>
+                <a href="#players" class="nav-link">Players</a>
+                <a href="#map" class="nav-link">Map</a>
+                <a href="#store" class="nav-link">Store</a>
+                <a href="#vote" class="nav-link">Vote</a>
+                <a href="#leaderboards" class="nav-link">Leaderboards</a>
+                <a href="#gallery" class="nav-link">Gallery</a>
+                <a href="#faq" class="nav-link">FAQ</a>
+                <a href="#blog" class="nav-link">News</a>
+                <a href="#contact" class="nav-link">Contact</a>
+            </div>
+            <div class="nav-controls">
+                <button class="theme-toggle" id="themeToggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <select class="language-select" id="languageSelect">
+                    <option value="en">EN</option>
+                    <option value="es">ES</option>
+                    <option value="fr">FR</option>
+                </select>
+                <!-- User Authentication Controls -->
+                <div class="user-controls" id="userControls">
+                    <button class="login-btn" id="loginBtn">Login</button>
+                    <button class="signup-btn" id="signupBtn">Sign Up</button>
+                </div>
+                <div class="user-menu" id="userMenu" style="display: none;">
+                    <div class="user-info">
+                        <span id="userDisplayName">Guest</span>
+                        <span id="userRank" class="user-rank">Member</span>
+                    </div>
+                    <div class="user-dropdown">
+                        <button class="user-dropdown-btn" id="userDropdownBtn">
+                            <i class="fas fa-user"></i>
+                        </button>
+                        <div class="user-dropdown-menu" id="userDropdownMenu">
+                            <a href="#" id="settingsBtn"><i class="fas fa-cog"></i> Settings</a>
+                            <a href="#" id="adminPanelBtn" style="display: none;"><i class="fas fa-crown"></i> Admin Panel</a>
+                            <a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-background">
+            <div class="hero-slide active" style="background-image: url('https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=1920&h=1080&fit=crop')"></div>
+            <div class="hero-slide" style="background-image: url('https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=1920&h=1080&fit=crop')"></div>
+            <div class="hero-slide" style="background-image: url('https://images.unsplash.com/photo-1515879218367-8466d910aaa4?w=1920&h=1080&fit=crop')"></div>
+        </div>
+        <div class="hero-content">
+            <h1 class="hero-title">Welcome to MedievalMC</h1>
+            <p class="hero-subtitle">Medieval Fantasy Adventure Awaits</p>
+            <div class="hero-buttons">
+                <button class="btn btn-primary" onclick="copyServerIP()">
+                    <i class="fas fa-copy"></i>
+                    Copy Server IP
+                </button>
+                <button class="btn btn-secondary" onclick="openDiscord()">
+                    <i class="fab fa-discord"></i>
+                    Join Discord
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Server Status Panel -->
+    <section class="server-status">
+        <div class="container">
+            <div class="status-grid">
+                <div class="status-card">
+                    <div class="status-icon">
+                        <i class="fas fa-server"></i>
+                    </div>
+                    <div class="status-info">
+                        <h3>Server IP</h3>
+                        <p id="serverIP">Medieval1.aternos.me</p>
+                    </div>
+                </div>
+                <div class="status-card">
+                    <div class="status-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="status-info">
+                        <h3>Players Online</h3>
+                        <p id="playersOnline">0/10</p>
+                    </div>
+                </div>
+                <div class="status-card">
+                    <div class="status-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="status-info">
+                        <h3>Server Status</h3>
+                        <p id="serverStatus">Offline</p>
+                    </div>
+                </div>
+                <div class="status-card">
+                    <div class="status-icon">
+                        <i class="fas fa-tachometer-alt"></i>
+                    </div>
+                    <div class="status-info">
+                        <h3>Version</h3>
+                        <p id="serverVersion">1.20.1</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Players Section -->
+    <section id="players" class="players">
+        <div class="container">
+            <h2 class="section-title">Players Online</h2>
+            <div class="players-grid" id="playersGrid">
+                <!-- Players will be populated by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Live Map Section -->
+    <section id="map" class="map">
+        <div class="container">
+            <h2 class="section-title">Live Server Map</h2>
+            <div class="map-container">
+                <div class="live-map-wrapper">
+                    <div class="map-controls">
+                        <button class="map-control-btn" onclick="toggleMapView('overworld')">Overworld</button>
+                        <button class="map-control-btn" onclick="toggleMapView('nether')">Nether</button>
+                        <button class="map-control-btn" onclick="toggleMapView('end')">The End</button>
+                        <button class="map-control-btn" onclick="refreshMap()">Refresh</button>
+                    </div>
+                    <div class="live-map-display" id="liveMapDisplay">
+                        <div class="map-loading">
+                            <div class="loading-spinner"></div>
+                            <p>Loading live map from MedievalMC...</p>
+                        </div>
+                        <canvas id="serverMapCanvas" width="1000" height="700"></canvas>
+                    </div>
+                    <div class="map-info">
+                        <div class="map-stats">
+                            <span>Players Online: <span id="mapPlayersCount">0</span></span>
+                            <span>Current Dimension: <span id="currentDimension">Overworld</span></span>
+                            <span>Last Updated: <span id="mapLastUpdate">Now</span></span>
+                        </div>
+                        <div class="map-legend">
+                            <h4>Legend</h4>
+                            <div class="legend-item"><span class="legend-color" style="background: #4CAF50;"></span> Online Players</div>
+                            <div class="legend-item"><span class="legend-color" style="background: #2196F3;"></span> Structures</div>
+                            <div class="legend-item"><span class="legend-color" style="background: #FF9800;"></span> Points of Interest</div>
+                            <div class="legend-item"><span class="legend-color" style="background: #F44336;"></span> Danger Zones</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="map-overlay">
+                    <h3>MedievelMC - Live World View</h3>
+                    <p>Real-time server map with live player positions!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Store Section -->
+    <section id="store" class="store">
+        <div class="container">
+            <h2 class="section-title">Server Store</h2>
+            <div class="store-grid">
+                <div class="store-item">
+                    <div class="store-icon">
+                        <i class="fas fa-crown"></i>
+                    </div>
+                    <h3>VIP Rank</h3>
+                    <p>Get exclusive perks and benefits</p>
+                    <div class="store-price">$9.99</div>
+                    <button class="btn btn-primary">Purchase</button>
+                </div>
+                <div class="store-item">
+                    <div class="store-icon">
+                        <i class="fas fa-gem"></i>
+                    </div>
+                    <h3>Premium Rank</h3>
+                    <p>Ultimate server experience</p>
+                    <div class="store-price">$19.99</div>
+                    <button class="btn btn-primary">Purchase</button>
+                </div>
+                <div class="store-item">
+                    <div class="store-icon">
+                        <i class="fas fa-sword"></i>
+                    </div>
+                    <h3>Starter Kit</h3>
+                    <p>Essential items for new players</p>
+                    <div class="store-price">$4.99</div>
+                    <button class="btn btn-primary">Purchase</button>
+                </div>
+                <div class="store-item">
+                    <div class="store-icon">
+                        <i class="fas fa-palette"></i>
+                    </div>
+                    <h3>Cosmetic Pack</h3>
+                    <p>Exclusive skins and effects</p>
+                    <div class="store-price">$7.99</div>
+                    <button class="btn btn-primary">Purchase</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Vote Section -->
+    <section id="vote" class="vote">
+        <div class="container">
+            <h2 class="section-title">Vote for Rewards</h2>
+            <div class="vote-grid">
+                <div class="vote-site">
+                    <h3>MinecraftServers.org</h3>
+                    <p>Vote daily for 100 coins</p>
+                    <button class="btn btn-primary">Vote Now</button>
+                </div>
+                <div class="vote-site">
+                    <h3>TopMinecraftServers</h3>
+                    <p>Vote daily for rare items</p>
+                    <button class="btn btn-primary">Vote Now</button>
+                </div>
+                <div class="vote-site">
+                    <h3>Minecraft-MP</h3>
+                    <p>Vote daily for XP boost</p>
+                    <button class="btn btn-primary">Vote Now</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Leaderboards Section -->
+    <section id="leaderboards" class="leaderboards">
+        <div class="container">
+            <h2 class="section-title">Leaderboards</h2>
+            <div class="leaderboard-tabs">
+                <button class="tab-btn active" data-tab="kills">Top Kills</button>
+                <button class="tab-btn" data-tab="playtime">Playtime</button>
+                <button class="tab-btn" data-tab="blocks">Blocks Mined</button>
+                <button class="tab-btn" data-tab="money">Money</button>
+            </div>
+            <div class="leaderboard-content">
+                <div class="leaderboard-list" id="leaderboardList">
+                    <!-- Leaderboard data will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="gallery" class="gallery">
+        <div class="container">
+            <h2 class="section-title">Gallery</h2>
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=300&fit=crop" alt="Screenshot 1">
+                    <div class="gallery-overlay">
+                        <h3>Castle Build</h3>
+                        <p>Amazing medieval castle by Coen3111</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=400&h=300&fit=crop" alt="Screenshot 2">
+                    <div class="gallery-overlay">
+                        <h3>Village Market</h3>
+                        <p>Bustling marketplace in spawn town</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1515879218367-8466d910aaa4?w=400&h=300&fit=crop" alt="Screenshot 3">
+                    <div class="gallery-overlay">
+                        <h3>Dragon Fight</h3>
+                        <p>Epic battle against the Ender Dragon</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Section -->
+    <section id="blog" class="blog">
+        <div class="container">
+            <h2 class="section-title">Latest News</h2>
+            <div class="blog-grid">
+                <article class="blog-post">
+                    <div class="blog-image">
+                        <img src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=200&fit=crop" alt="Update 1.5">
+                    </div>
+                    <div class="blog-content">
+                        <h3>Server Update 1.5 - New Dungeons!</h3>
+                        <p>We've added 5 new dungeons with unique rewards and challenges...</p>
+                        <span class="blog-date">December 15, 2023</span>
+                    </div>
+                </article>
+                <article class="blog-post">
+                    <div class="blog-image">
+                        <img src="https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=400&h=200&fit=crop" alt="Christmas Event">
+                    </div>
+                    <div class="blog-content">
+                        <h3>Christmas Event is Live!</h3>
+                        <p>Join us for festive activities and exclusive holiday rewards...</p>
+                        <span class="blog-date">December 20, 2023</span>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2 class="section-title">Contact Us</h2>
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <h3>Get in Touch</h3>
+                    <p>Have questions? We're here to help!</p>
+                    <div class="contact-methods">
+                        <div class="contact-method">
+                            <i class="fab fa-discord"></i>
+                            <span>Discord: discord.gg/WMR4KwtqJ8</span>
+                        </div>
+                        <div class="contact-method">
+                            <i class="fas fa-envelope"></i>
+                            <span>Email: admin@medievalmc.net</span>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary" onclick="openDiscord()">
+                        <i class="fab fa-discord"></i>
+                        Join Discord Server
+                    </button>
+                </div>
+                <div class="contact-form">
+                    <form id="contactForm">
+                        <input type="text" name="name" placeholder="Your Name" required>
+                        <input type="email" name="email" placeholder="Your Email" required>
+                        <textarea name="message" placeholder="Your Message" rows="5" required></textarea>
+                        <button type="submit" class="btn btn-primary">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Resource Pack Section -->
+    <section class="resource-pack">
+        <div class="container">
+            <h2 class="section-title">Resource Pack</h2>
+            <div class="resource-pack-content">
+                <div class="resource-pack-info">
+                    <h3>CarronshoreMC Resource Pack</h3>
+                    <p>Enhanced textures and medieval-themed designs</p>
+                    <div class="resource-pack-details">
+                        <span>Version: 1.20.1</span>
+                        <span>Size: 64MB</span>
+                        <span>Type: Medieval Fantasy</span>
+                    </div>
+                </div>
+                <button class="btn btn-primary">
+                    <i class="fas fa-download"></i>
+                    Download Resource Pack
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Rules Section -->
+    <section class="rules">
+        <div class="container">
+            <h2 class="section-title">Server Rules</h2>
+            <div class="rules-content">
+                <div class="rule-item">
+                    <h3>1. No Griefing</h3>
+                    <p>Respect other players' builds and creations</p>
+                </div>
+                <div class="rule-item">
+                    <h3>2. Be Respectful</h3>
+                    <p>Treat all players with kindness and respect</p>
+                </div>
+                <div class="rule-item">
+                    <h3>3. No Cheating</h3>
+                    <p>No hacks, exploits, or unfair advantages</p>
+                </div>
+                <div class="rule-item">
+                    <h3>4. English Only</h3>
+                    <p>Please use English in public chat</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Staff Section -->
+    <section class="staff">
+        <div class="container">
+            <h2 class="section-title">Staff Team</h2>
+            <div class="staff-grid">
+                <div class="staff-member">
+                    <div class="staff-avatar">
+                        <img src="https://minotar.net/helm/Coen3111/150" alt="Founder">
+                    </div>
+                    <h3>Coen3111</h3>
+                    <p class="staff-rank">Founder</p>
+                    <p>Founded CarronshoreMC in 2021</p>
+                </div>
+                <div class="staff-member">
+                    <div class="staff-avatar">
+                        <img src="https://images.unsplash.com/photo-1494790108755-2616b612b1-?w=150&h=150&fit=crop&crop=face" alt="Admin">
+                    </div>
+                    <h3>AdminHelper</h3>
+                    <p class="staff-rank">Administrator</p>
+                    <p>Manages server operations and events</p>
+                </div>
+                <div class="staff-member">
+                    <div class="staff-avatar">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face" alt="Moderator">
+                    </div>
+                    <h3>ModeratorPro</h3>
+                    <p class="staff-rank">Moderator</p>
+                    <p>Keeps the peace and helps players</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Statistics Section -->
+    <section class="statistics">
+        <div class="container">
+            <h2 class="section-title">Server Statistics</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <canvas id="playersChart" width="400" height="200"></canvas>
+                    <h3>Daily Players</h3>
+                </div>
+                <div class="stat-card">
+                    <canvas id="playtimeChart" width="400" height="200"></canvas>
+                    <h3>Monthly Playtime</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="faq">
+        <div class="container">
+            <h2 class="section-title">Frequently Asked Questions</h2>
+            <div class="faq-content">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>How do I join the server?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Simply add our server IP "Medieval1.aternos.me" to your Minecraft multiplayer list and connect!</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>What version of Minecraft do you support?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>We support Minecraft Java Edition 1.20.1 and above. We recommend using the latest version for the best experience.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>Are there any age restrictions?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Our server is family-friendly and welcomes players of all ages. We maintain a safe environment for everyone.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>How do I claim land?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Use the /claim command with a golden shovel to protect your builds. Type /help claims for more information.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="newsletter">
+        <div class="container">
+            <h2 class="section-title">Stay Updated</h2>
+            <div class="newsletter-content">
+                <p>Subscribe to our newsletter for the latest updates and events!</p>
+                <form class="newsletter-form">
+                    <input type="email" placeholder="Enter your email" required>
+                    <button type="submit" class="btn btn-primary">Subscribe</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+
+
+    <!-- Admin Panel -->
+    <div class="admin-panel" id="adminPanel">
+        <div class="admin-header">
+            <h2>Admin Dashboard</h2>
+            <button class="close-btn" id="closeAdmin">&times;</button>
+        </div>
+        <div class="admin-content">
+            <div class="admin-section">
+                <h3>User Management</h3>
+                <div class="user-search">
+                    <input type="text" id="userSearch" placeholder="Search users...">
+                    <button class="btn btn-primary" onclick="searchUsers()">Search</button>
+                </div>
+                <div class="users-list" id="usersList">
+                    <!-- Users will be populated by JavaScript -->
+                </div>
+            </div>
+            <div class="admin-section">
+                <h3>Staff Management</h3>
+                <div class="staff-controls">
+                    <button class="btn btn-primary" onclick="openStaffManager()">Manage Staff</button>
+                    <button class="btn btn-info" onclick="viewAllUsers()">View All Users</button>
+                    <button class="btn btn-warning" onclick="openAnnouncementManager()">Manage Announcements</button>
+                    <button class="btn btn-success" onclick="openGalleryManager()">Manage Gallery</button>
+                </div></div>
+            </div>
+            <div class="admin-section">
+                <h3>Server Management</h3>
+                <div class="admin-controls">
+                    <button class="btn btn-primary" onclick="toggleMaintenance()">Toggle Maintenance</button>
+                    <button class="btn btn-secondary" onclick="backupServer()">Backup Server</button>
+                    <button class="btn btn-success" onclick="refreshServerStatus()">Refresh Status</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- User Promotion Modal -->
+    <div class="promotion-modal" id="promotionModal">
+        <div class="promotion-content">
+            <div class="promotion-header">
+                <h2>Promote User</h2>
+                <button class="close-btn" id="closePromotion">&times;</button>
+            </div>
+            <div class="promotion-body">
+                <p>Promote <span id="promoteUsername"></span> to:</p>
+                <div class="rank-buttons">
+                    <button class="btn btn-success" onclick="promoteUser('VIP')">VIP</button>
+                    <button class="btn btn-info" onclick="promoteUser('Helper')">Helper</button>
+                    <button class="btn btn-warning" onclick="promoteUser('Moderator')">Moderator</button>
+                    <button class="btn btn-danger" onclick="promoteUser('Admin')">Admin</button>
+                    <button class="btn" style="background: #9C27B0; color: white;" onclick="promoteUser('Sponsor')">Sponsor</button>
+                    <button class="btn btn-secondary" onclick="promoteUser('Member')">Demote to Member</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Staff Manager Modal -->
+    <div class="staff-modal" id="staffModal">
+        <div class="staff-content">
+            <div class="staff-header">
+                <h2>Staff Manager</h2>
+                <button class="close-btn" id="closeStaff">&times;</button>
+            </div>
+            <div class="staff-body">
+                <div class="staff-section">
+                    <h3>Add New Staff Member</h3>
+                    <form id="addStaffForm">
+                        <div class="form-group">
+                            <label>Minecraft Username</label>
+                            <input type="text" id="staffMinecraftUsername" placeholder="Enter Minecraft username" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Website Username</label>
+                            <input type="text" id="staffWebsiteUsername" placeholder="Enter website username" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Rank</label>
+                            <select id="staffRank" required>
+                                <option value="">Select Rank</option>
+                                <option value="helper">Helper</option>
+                                <option value="moderator">Moderator</option>
+                                <option value="admin">Admin</option>
+                                <option value="sponsor">Sponsor</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Bio</label>
+                            <textarea id="staffBio" placeholder="Enter staff bio" rows="3"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Add Staff Member</button>
+                    </form>
+                </div>
+                <div class="staff-section">
+                    <h3>Current Staff</h3>
+                    <div class="current-staff-list" id="currentStaffList">
+                        <!-- Staff list will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Announcement Manager Modal -->
+    <div class="announcement-modal" id="announcementModal">
+        <div class="announcement-content">
+            <div class="announcement-header">
+                <h2>Announcement Manager</h2>
+                <button class="close-btn" id="closeAnnouncement">&times;</button>
+            </div>
+            <div class="announcement-body">
+                <div class="announcement-section">
+                    <h3>Create New Announcement</h3>
+                    <form id="announcementForm">
+                        <div class="form-group">
+                            <label>Title</label>
+                            <input type="text" id="announcementTitle" placeholder="Enter announcement title" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Content</label>
+                            <textarea id="announcementContent" placeholder="Enter announcement content" rows="4" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Type</label>
+                            <select id="announcementType" required>
+                                <option value="info">Information</option>
+                                <option value="update">Update</option>
+                                <option value="event">Event</option>
+                                <option value="maintenance">Maintenance</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Post Announcement</button>
+                    </form>
+                </div>
+                <div class="announcement-section">
+                    <h3>Recent Announcements</h3>
+                    <div class="announcements-list" id="announcementsList">
+                        <!-- Announcements will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Gallery Manager Modal -->
+    <div class="gallery-modal" id="galleryModal">
+        <div class="gallery-content">
+            <div class="gallery-header">
+                <h2>Gallery Manager</h2>
+                <button class="close-btn" id="closeGallery">&times;</button>
+            </div>
+            <div class="gallery-body">
+                <div class="gallery-section">
+                    <h3>Add New Screenshot</h3>
+                    <form id="galleryForm">
+                        <div class="form-group">
+                            <label>Title</label>
+                            <input type="text" id="galleryTitle" placeholder="Enter screenshot title (e.g., Castle Build)" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Description</label>
+                            <textarea id="galleryDescription" placeholder="Enter screenshot description (e.g., Amazing medieval castle by Coen3111)" rows="3" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Image URL</label>
+                            <input type="url" id="galleryImageUrl" placeholder="Enter image URL (e.g., from Imgur or upload service)" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Add to Gallery</button>
+                    </form>
+                </div>
+                <div class="gallery-section">
+                    <h3>Current Gallery Items</h3>
+                    <div class="gallery-items-list" id="galleryItemsList">
+                        <!-- Gallery items will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Easter Egg -->
+    <div class="easter-egg" id="easterEgg">
+        <div class="easter-egg-content">
+            <h3>🎉 You found the secret!</h3>
+            <p>Here's a special reward code: CARRONSECRET2023</p>
+            <button class="btn btn-primary" onclick="closeEasterEgg()">Claim Reward</button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>MedievalMC</h3>
+                    <p>The ultimate medieval Minecraft experience</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#rules">Rules</a></li>
+                        <li><a href="#store">Store</a></li>
+                        <li><a href="#vote">Vote</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Connect</h3>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-discord"></i></a>
+                        <a href="#"><a><a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 MedievalMC. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
